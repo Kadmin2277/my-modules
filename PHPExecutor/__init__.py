@@ -8,11 +8,9 @@ class PHPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.endswith(".php"):
             # Определяем путь к файлу.
-            file_path = self.path[1:]  # Убираем первый символ '/'
+            file_path = self.path[1:]
             if os.path.isfile(file_path):
-                # Выполняем PHP код и получаем вывод.
                 result = subprocess.run(['php', file_path], capture_output=True, text=True)
-                # Устанавливаем заголовок и возвращаем содержимое.
                 self.send_response(200)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
